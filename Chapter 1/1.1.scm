@@ -64,3 +64,56 @@
     ; So it evaluates the if statement's predicate (= x 0) right out of the gate and boom!
     ; it evaluates to true
     ; then the scheme interpreter returns 0.
+
+;Exercise 1.6 Page 32
+  ; I don't think Alyssa P. Hacker's code returns because her code
+  ; evaluates with applicative order evaluation. The expressions will keep getting evaluated.
+
+;Exercise 1.7 Page 33
+  ;Objective: to write a better "good-enough?" procedure. "Watch how guess changes and make it stop
+  ; when the change is a very small fraction"
+  ; SICP provided square root code:
+(define (square x)
+  (* x x))
+(define (abs x)
+  (if (> 0 x)
+    (- x)
+    x))
+(define (improve guess x)
+  (average guess (/ x guess)))
+(define (average x y)
+  (/ (+ x y) 2))
+(define (good-enough? guess x)
+  (< (abs (- (square guess) x)) 0.001))
+(define (sqrt-iter guess x)
+  (if (good-enough? guess x)
+    guess
+    (sqrt-iter (improve guess x) x)))
+(define (sqrt x)
+  (sqrt-iter 1.0 x))
+
+    ; My modified sqrt-iter and good-enough?
+(define (better-sqrt-iter guess x prev-guess)
+  (if (better-good-enough? guess prev-guess)
+        guess
+        (sqrt-iter (improve guess x) x guess)))
+(define (better-good-enough? guess prev-guess)
+  (< (abs (- prev-guess guess)) 0.001))
+(define (better-sqrt x)
+  (better-sqrt-iter 1.0 x 0))
+
+;Exercise 1.8 Page 33
+  ; Get the cube-root
+  ; Assuming we have the same functions as from 1.7
+(define (cbrt-improve guess x)
+  (/ (+ (/ x (square guess)) (* 2 guess)) 3))
+(define (cube x)
+  (* x x x))
+(define (good-enough-cbrt? guess x)
+  (< (abs (- (cube guess) x)) 0.001))
+(define (cbrt-iter guess x)
+  (if (good-enough-cbrt? guess x)
+    guess
+    (cbrt-iter (cbrt-improve guess x) x)))
+(define (cbrt x)
+  (cbrt-iter 1.0 x))
