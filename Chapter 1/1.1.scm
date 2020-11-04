@@ -1,28 +1,31 @@
-;Exercises for Chapter 1.1.6 (uncorrected)
+;Exercises for Chapter 1.1 (corrected)
+; y is correct n is incorrect
+; No total score. The point is to learn, if I didn't get something, I'll change my approach
+; to get it. Understanding is the point, not gratification.
 
 ;Exercise 1.1 Page 26
-  ;10
-  ;12
-  ;8
-  ;3
-  ;6
-  ;a (correction sort of: Value: a)
-  ;b
-  ;19
-  ;#f
-  ;4
-  ;16
-  ;6
-  ;16
-
-
+  ;10 y
+  ;12 y
+  ;8 y
+  ;3 y
+  ;6 y
+  ;a (correction sort of: Value: a) sort of n
+  ;b (correction: Value: b) sort of n
+  ;19 y
+  ;#f y
+  ;4 y
+  ;16 y
+  ;6 y
+  ;16 y
 
 ;Exercise 1.2 Page 27
+; y
 (/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))
    (* 3 (- 6 2) (- 2 7)))
-   ;the answer is -37/150 according to the REPL
+   ;the answer is -37/150 according to the REPL also y
 
 ;Exercise 1.3 page 27
+; y
 (define (add-squares x y)
   (+ (* x x) (* y y)))
 (define (3arg x y z)
@@ -35,6 +38,7 @@
 
 
 ;Exercise 1.4 Page 27
+; y
 (define (a-plus-abs-b a b)
   ((if (> b 0)
         +
@@ -48,6 +52,7 @@
 
 
 ;Exercise 1.5 Page 27
+; y
 (define (p) (p))
 (define (test x y)
   (if (= x 0) 0 y))
@@ -66,10 +71,13 @@
     ; then the scheme interpreter returns 0.
 
 ;Exercise 1.6 Page 32
+; y comment: yes! I was right! Alyssa P. Hacker's code is stuck in an infinte loop
   ; I don't think Alyssa P. Hacker's code returns because her code
   ; evaluates with applicative order evaluation. The expressions will keep getting evaluated.
 
 ;Exercise 1.7 Page 33
+; y comment: It does the job in the scheme interpreter. And it hit the objective.
+; It just looks different than the instruction books code.
   ;Objective: to write a better "good-enough?" procedure. "Watch how guess changes and make it stop
   ; when the change is a very small fraction"
   ; SICP provided square root code:
@@ -96,13 +104,22 @@
 (define (better-sqrt-iter guess x prev-guess)
   (if (better-good-enough? guess prev-guess)
         guess
-        (sqrt-iter (improve guess x) x guess)))
+        (better-sqrt-iter (improve guess x) x guess)))
 (define (better-good-enough? guess prev-guess)
   (< (abs (- prev-guess guess)) 0.001))
 (define (better-sqrt x)
   (better-sqrt-iter 1.0 x 0))
+; So my code was close, It was running wrong because of a small error, if it works
+; now I'll give myself full credit.
+; Alright, it works now. I'll give myself full credit for this problem.
+; I'm reading a solution book while grading, and my "better-good-enough?" could be improved.
+; ....
+; Ignore the irony.
 
 ;Exercise 1.8 Page 33
+; y
+; Comment: I tried to make it work just like 1.7 but no.
+; below this I rewrote some of it to follow the paradigm.
   ; Get the cube-root
   ; Assuming we have the same functions as from 1.7
 (define (cbrt-improve guess x)
@@ -117,3 +134,17 @@
     (cbrt-iter (cbrt-improve guess x) x)))
 (define (cbrt x)
   (cbrt-iter 1.0 x))
+
+; Make it work according to 1.7
+(define (cbrt-improve guess x)
+  (/ (+ (/ x (square guess)) (* 2 guess)) 3))
+(define (cube x)
+  (* x x x))
+(define (good-enough-cbrt? guess x previous-guess)
+  (< (abs (/ (- previous-guess guess) guess)) 0.001))
+(define (cbrt-iter guess x prev-gues)
+  (if (good-enough-cbrt? guess x prev-guess)
+    guess
+    (cbrt-iter (cbrt-improve guess x) x guess)))
+(define (cbrt x)
+  (cbrt-iter 1.0 x 1.0))
