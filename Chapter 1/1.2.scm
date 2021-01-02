@@ -1,4 +1,4 @@
-;Exercises for Chapter 1.2 (uncorrected)
+;Exercises for Chapter 1.2 (incomplete)
 
 ;Exercise 1.9 Page 46
   ; First process
@@ -20,19 +20,19 @@
 ; because you can restart at any moment
 
 ;Exercise 1.10 Page 47
-; What are the values of the following expressions
-  ; Just entered them into the interpreter.
-  ; (A 1 10)
-  ; 1024
-  ; (A 2 4)
-  ; 65536
-  ; (A 3 3)
-  ; 65536
-; What do the following functions compute?
-  ; procedure f computes 2n
-  ; procedure g computes 2^n
-  ; procedure h computes Ack(2, n)
-  ; procedure k computes 5n^2
+  ; What are the values of the following expressions
+    ; Just entered them into the interpreter.
+    ; (A 1 10)
+    ; 1024
+    ; (A 2 4)
+    ; 65536
+    ; (A 3 3)
+    ; 65536
+  ; What do the following functions compute?
+    ; procedure f computes 2n
+    ; procedure g computes 2^n
+    ; procedure h computes Ack(2, n)
+    ; procedure k computes 5n^2
 
 ;Exercise 1.11 Page 53
   ; recursive and iterative processes
@@ -186,4 +186,16 @@
     ; Here is my attempt:
     ; (sine) is 0(n^2)
 
-;Exercise 1.16 Page __
+; 1.16
+; 1.17
+; 1.18
+; 1.19
+; 1.20
+; 1.21
+; 1.22
+; 1.23
+; 1.24
+; 1.25
+; 1.26
+; 1.27
+; 1.28
