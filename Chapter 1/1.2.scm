@@ -155,7 +155,7 @@
   (define (sine angle)
     (if (not (> (abs angle) 0.1))
      angle
-      (p (sine (/ angle 3.0))))))
+      (p (sine (/ angle 3.0)))))
   ; a. when (sine 12.5) is evaluated, how many times does p run?
     ; Correction, the angle was 12.15, and it runs 5 times, but I got the write answer,
     ; at least in terms of code.
@@ -186,8 +186,44 @@
     ; Here is my attempt:
     ; (sine) is 0(n^2)
 
-; 1.16
+; 1.16: Iterative fast-expt
+  ; Solved it, checked answer, wasn't correct, resolved it.
+  (define (expt b n)
+    (cond
+      ((= n 0) 1)
+      ((= n 1) n)
+      ((even? n) (expt-iter b n 1))
+      (else (* b (expt-iter b (- n 1) 1)))))
+
+  (define (expt-iter b n a)
+    (if (= n 0)
+      a
+      (expt-iter (* b b) (- n 1) b)))
+
+  (define (square n)
+    (* n n))
+
+  (define (even? n)
+    (= (mod n 2) 0))
+
+    ; My first attempt was not tail recursive, I think.
+    ; It also did not... work.
+    ; did not work past powers of 3, because I was decrementing n.
+    ; Needed to divide n by 2.
+  (define (expt-iter-2 b n a)
+    (if (= n 0.5)
+      a
+      (expt-iter-2 (square b) (/ n 2) b)))
+    ; This one works... but it doesn't keep a constant a(b^n).
+    ; I also need to update my (expt) because "a tail"
+  (define (expt-2 b n)
+    (cond
+      ((= n 0) 0)
+      ((= n 1) n)
+      ((even? n) (expt-iter b n 1))
+      (else (expt-iter b (- n 1) b))))
 ; 1.17
+
 ; 1.18
 ; 1.19
 ; 1.20
