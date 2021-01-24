@@ -210,22 +210,60 @@
     ; It also did not... work.
     ; did not work past powers of 3, because I was decrementing n.
     ; Needed to divide n by 2.
-  (define (expt-iter-2 b n a)
-    (if (= n 0.5)
-      a
-      (expt-iter-2 (square b) (/ n 2) b)))
-    ; This one works... but it doesn't keep a constant a(b^n).
-    ; I also need to update my (expt) because "a tail"
-  (define (expt-2 b n)
-    (cond
-      ((= n 0) 0)
-      ((= n 1) n)
-      ((even? n) (expt-iter b n 1))
-      (else (expt-iter b (- n 1) b))))
-; 1.17
+    ; Used a solution from a web, but after a long struggle against the repl.
+    ; USE YOUR BRAIN!
+    (define (expt-iter b n a)
+      (cond ((= n 0) a)
+            ((even? n) (expt-iter (* b b) (/ n 2) a))
+            (else (expt-iter b (- n 1) (* b a)))))
 
-; 1.18
+    (define (square n)
+      (* n n))
+
+    (define (even? n)
+      (= (mod n 2) 0))
+
+    (define (expt b n)
+        (cond
+          ((= n 0) 0)
+          ((= n 1) n)
+          (else (* b (expt-iter b (- n 1) 1)))))
+
+; 1.17: O(log n) multiplication!
+  ; For logarithmic multiplication we need to use a handful of procedures.
+  ; need: halve, fast-expt, double.
+
+  (define (halve n)
+    (/ n 2))
+
+  (define (double n)
+    (* n 2))
+
+    (define (* b n)
+    (cond ((= n 0) 0)
+          ((= 0 (halve n)) (double (* b (halve n))))
+          (else (+ b (* b (- n 1))))))
+
+  ; Basically replaced fast-expt, but replaced squaring with doubling.
+
+; 1.18: Iterative fast-*
+  (define (halve n)
+    (/ n 2))
+
+  (define (double n)
+    (* n 2))
+
+  (define (*-iter b n a)
+    (cond ((= n 0) n))
+          ((even? n) (*-iter (double b) (halve n) a)
+          (else (*-iter b (- n 1) (+ b a)))))
+  (define (* b n)
+    (*-iter b n 0))
+
+  ; It needs to start at zero, because... 
+
 ; 1.19
+
 ; 1.20
 ; 1.21
 ; 1.22
